@@ -1,0 +1,6 @@
+---
+rds_host: test
+rds_port: test
+rds_user: test
+
+apps_db: {}

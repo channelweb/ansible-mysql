@@ -1,0 +1,28 @@
+---
+- name: create mysql databases
+  mysql_db:
+    login_host: "{{ rds_host | mandatory }}"
+    login_port: "{{ rds_port | mandatory }}"
+    login_user: "{{ rds_user | mandatory }}"
+    login_password: "{{ rds_password | mandatory }}"
+    name: "{{ item.value.mysql_database | mandatory }}"
+    state: present
+  when: item.value.mysql_database is defined
+  with_dict: "{{ apps_secrets | combine(wp_secrets) }}"
+  tags: mysql
+
+
+- name: create mysql users with correct privileges
+  mysql_user:
+    login_host: "{{ rds_host | mandatory }}"
+    login_port: "{{ rds_port | mandatory }}"
+    login_user: "{{ rds_user | mandatory }}"
+    login_password: "{{ rds_password | mandatory }}"
+    name: "{{ item.value.mysql_username | mandatory }}"
+    host: "%"
+    password: "{{ item.value.mysql_password | mandatory }}"
+    state: present
+    priv: "{{ item.value.mysql_database | mandatory }}.*:ALL"
+  when: item.value.mysql_database is defined
+  with_dict: "{{ apps_secrets | combine(wp_secrets) }}"
+  tags: mysql
