@@ -2,5 +2,17 @@
 rds_host: test
 rds_port: test
 rds_user: test
+    
+apps_secrets: {}
+wp_secrets: {}
 
-apps_db: {}
+# `apps_secrets` dict example
+# same structure for `wp_secrets`
+# dict may of course contain other keys 
+#
+# apps_secrets:
+#     my_app:
+#       mysql_database: dbname  
+#       mysql_username: dbuser
+#       mysql_password: dpbasswd
+ 
