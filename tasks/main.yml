@@ -10,6 +10,7 @@
     state: present
   when: item.value.mysql_database is defined
   with_dict: "{{ apps_secrets | combine(wp_secrets) }}"
+  run_once: true
   tags: mysql
 
 
@@ -26,4 +27,5 @@
     priv: "{{ item.value.mysql_database | mandatory }}.*:ALL"
   when: item.value.mysql_database is defined
   with_dict: "{{ apps_secrets | combine(wp_secrets) }}"
+  run_once: true
   tags: mysql
